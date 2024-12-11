@@ -14,24 +14,23 @@
     </div>
   
     <!-- current day weather tab -->
-    <div class="container  align-text">
+    <div class="container background">
        <h1>Today</h1>
         <h1 id="weatherIcon">Weather Icon ID</h1>
-        <h1 id="currentTemp">56 ID</h1>
+        <h1 id="currentTemp">56 CUrrent</h1>
         <h2> High/Low</h2>
-        <h2 id="highTemp">58 ID</h2>
-        <h2 id="lowTemp"> 52 ID</h2>
-        <h2 id="city">Stockton, Ca ID NEED</h2> 
+        <h2 id="highTemp">58 HIGH/ <h2 id="lowTemp"> 52 LOW</h2></h2>
+        <h2 id="city"> City </h2>  
     </div>
 
     <!-- Recommendation -->
-    <div class="container ">
+    <div class="container background">
       <h1>Today's Recommendation</h1>
-      <h2 id="recommend"> ID NEEED Grilled white fish (like cod or tilapia) with a tangy slaw, topped with avocado and a squeeze of lime. It's light but safisfying and perfect for outdoor eating!</h2>
+      <h2 id="recommend"> Grilled white fish (like cod or tilapia) with a tangy slaw, topped with avocado and a squeeze of lime. It's light but safisfying and perfect for outdoor eating!</h2>
     </div>
 
     <!-- Favorites List -->
-    <div class="container ">
+    <div class="container background">
       <h3 id="top5List"> Your Favorites List ID</h3>
         <li>
           location 1
@@ -42,13 +41,34 @@
         </li>
       </div>
     </div>
-       
+    
+       <hr>
     <!-- Weather tabs (4 days) -->
     <div class="container">
-      <h2 id="day1">Day 1</h2>
-      <h2 id="day2">Day 2</h2>
-      <h2 id="day3">Day 3</h2>
-      <h2 id="day4">Day 4</h2>
+
+      <div class="row">
+        <div class="col background text-center">
+        <div id="weatherIcon1"></div>
+        <h2 id="">Day1</h2>
+        <h2 id="day1">temp</h2>
+      </div>
+      <div class="col background text-center">
+        <div id="weatherIcon2"></div>
+        <h2 class="d-flex justify-content-center">Day2</h2>
+        <h2 id="day2">temp</h2>
+      </div>
+      <div class="col background text-center">
+        <div id="weatherIcon3"></div>
+        <h2 class="d-flex justify-content-center">Day3</h2>
+        <h2 id="day3">temp</h2>
+      </div>
+      <div class="col background text-center">
+        <div id="weatherIcon4"></div>
+        <h2 id="" class="">Day4</h2>
+        <h2 id="day4">temp</h2>
+      </div>
+    </div>
+   
     </div>
 
     <div class="container m-5">
@@ -56,6 +76,6 @@
     </div>
      
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script type="module" src="./scripts/data.js"> </script>
+    <script type="module" src="./scripts/app.js"> </script>
   </body>
 </html>

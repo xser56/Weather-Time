@@ -6,15 +6,22 @@ body
     background-size: cover;
 } 
 
- .container
+ .background
 {
     background-color: white;
     box-shadow: 10px;
     width: 50%;
-    border-radius: 20px;
+    border-radius: 10px;
+    
 }
 
 .search-Container
 {
     background-color: white;
+}
+
+
+img
+{
+    width: 100%
 }
