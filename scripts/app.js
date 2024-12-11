@@ -53,15 +53,6 @@ testButton.addEventListener("click", async function()
 {
     let data = await getAPI();
     let weekData = await getWeekAPI();
-    
-    // Check data API
-    console.log("Current Day")
-    console.log("The current temperature is " + Math.trunc(data.list[0].main.temp));
-    console.log(`Weather Icon: ${data.list[0].weather[0].icon}`);
-    console.log("The min temperature is " + data.list[0].main.temp_min);
-    console.log("The max temperature is " + data.list[0].main.temp_max);
-    console.log("city " + data.city.name, data.city.country);
-    console.log("Day 1" + data.list[8].dt_txt);
 
     // Current Day
     weatherIcon.innerText = data.list[0].weather[0].icon;

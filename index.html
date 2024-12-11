@@ -4,74 +4,95 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Bootstrap demo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@200..800&family=Fugaz+One&family=Gloock&family=IBM+Plex+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <link rel="stylesheet" href="./stlyes/styles.css">
   </head>
   <body>
     <!-- Search bar with drop down -->
-    <div class="search-Container d-flex justify-content-end">
-      <h2> Search location</h2>
+    <div class="container mt-3">
+      <div class="search-container d-flex justify-content-end">
+        <input class="form-control w-50 me-2" type="text" placeholder="Search location">
+        <button class="btn btn-primary">Search</button>
+      </div>
     </div>
-  
     <!-- current day weather tab -->
-    <div class="container background">
-       <h1>Today</h1>
-        <h1 id="weatherIcon">Weather Icon ID</h1>
-        <h1 id="currentTemp">56 CUrrent</h1>
-        <h2> High/Low</h2>
-        <h2 id="highTemp">58 HIGH/ <h2 id="lowTemp"> 52 LOW</h2></h2>
-        <h2 id="city"> City </h2>  
+    <div class="container background mt-4">
+      <div class="text-center">
+        <h1 class="text-center">Today</h1>
+        <div class="d-flex justify-content-center">
+          <div id="weatherIcon" class="fs-1">icon here</div>
+        </div>
+        <h2 class="text-center mt-2" id="currentTemp"> Current</h2>
+        <p class="text-center"> <span id="highTemp">high</span>/<span id="lowTemp">low</span></p>
+        <p class="text-center " id="city"> Location</p>
+      </div>
     </div>
 
     <!-- Recommendation -->
-    <div class="container background">
-      <h1>Today's Recommendation</h1>
-      <h2 id="rec"> Grilled white fish (like cod or tilapia) with a tangy slaw, topped with avocado and a squeeze of lime. It's light but safisfying and perfect for outdoor eating!</h2>
+    <div class="container background my-5 py-4">
+      <h1 class="text-center">Today's Recommendation</h1>
+      <p id="rec" class="pt-3 ps-3">
+        Grilled white fish (like cod or tilapia) with a tangy slaw, topped with avocado and a squeeze of lime. It's light but satisfying and perfect for outdoor eating!
+      </p>
     </div>
 
     <!-- Favorites List -->
-    <div class="container background">
-      <h3 id="top5List"> Your Favorites List ID</h3>
-        <li>
-          location 1
-          location 2
-          location 3    
-          location 4
-          location 5
-        </li>
+    <div class="container background pt-4 pb-2 ps-4">
+      <h3 class="text-center"> Your Favorites List ID</h3>
+        <ul id="top5List" class="list-unstyled">
+          <li> 1. location 1 </li>
+          <li> 2. location 2 </li>
+          <li> 3. location 3 </li>
+          <li> 4. location 4 </li>
+          <li> 5. location 5 </li>
+        </ul>
       </div>
     </div>
     
        <hr>
     <!-- Weather tabs (4 days) -->
     <div class="container">
+      <div class="row text-center">
 
-      <div class="row">
-        <div class="col background text-center">
-        <div id="weatherIcon1"></div>
-        <h2 id="">Day1</h2>
-        <h2 id="day1">temp</h2>
+        <div class="col-3">
+          <div class="card">
+            <div id="weatherIcon1">icon</div>
+            <h2 id="">Day1</h2>
+            <h2 id="day1">temp</h2>
+          </div>
       </div>
-      <div class="col background text-center">
-        <div id="weatherIcon2"></div>
-        <h2 class="d-flex justify-content-center">Day2</h2>
-        <h2 id="day2">temp</h2>
+
+      <div class="col-3 ">
+        <div class="card"> 
+          <div id="weatherIcon2">icon</div>
+          <h2 class="d-flex justify-content-center">Day2</h2>
+          <h2 id="day2">temp</h2>
+        </div>
       </div>
-      <div class="col background text-center">
-        <div id="weatherIcon3"></div>
-        <h2 class="d-flex justify-content-center">Day3</h2>
-        <h2 id="day3">temp</h2>
+
+      <div class="col-3 ">
+        <div class="card">
+          <div id="weatherIcon3">icon</div>
+          <h2 class="d-flex justify-content-center">Day3</h2>
+          <h2 id="day3">temp</h2>
+        </div>
       </div>
-      <div class="col background text-center">
-        <div id="weatherIcon4"></div>
-        <h2 id="" class="">Day4</h2>
-        <h2 id="day4">temp</h2>
+
+      <div class="col-3 ">
+        <div class="card">
+          <div id="weatherIcon4">icon</div>
+          <h2 id="" class="">Day4</h2>
+          <h2 id="day4">temp</h2>
+        </div>
       </div>
+
     </div>
-   
     </div>
 
-    <div class="container m-5">
+    <div class="container mt-5 pt-5 text-center">
       <button id="testButton"> API Test Button</button>
       <button id="testButtonRec"> Food Rec Test Button </button>
 
