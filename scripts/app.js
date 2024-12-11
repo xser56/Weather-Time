@@ -1,15 +1,5 @@
 import { myKey } from "./key.js";
 
-// Day Temps
-// const temperatures = 
-// [
-//     { temp: document.getElementById("currentDayTemp") },
-//     { temp: document.getElementById("day1") },
-//     { temp: document.getElementById("day2") },
-//     { temp: document.getElementById("day3") },
-//     { temp: document.getElementById("day4") }
-// ];
-
 let currentTemp = document.getElementById("currentTemp");
 let lowTemp = document.getElementById("lowTemp");
 let highTemp = document.getElementById("highTemp");
@@ -24,6 +14,8 @@ let day1 = document.getElementById("day1");
 let day2 = document.getElementById("day2");
 let day3 = document.getElementById("day3");
 let day4 = document.getElementById("day4");
+
+let rec = document.getElementById("rec");
 
 // Test Button
 let testButton = document.getElementById("testButton");
@@ -42,7 +34,21 @@ async function getWeekAPI()
     return data;    
 }
 
+async function getFoodData() // Local data
+{
+    const response = await fetch("./data/food.json")
+    const data = await response.json();
+    console.log(data.food.cold[0].food1);
+    return data;
+}
 
+testButtonRec.addEventListener("click", async function()
+{
+    let data = await getFoodData();
+    rec.innerText = data.food.cold[0].food1;
+});
+
+// Test Shit
 testButton.addEventListener("click", async function()
 {
     let data = await getAPI();

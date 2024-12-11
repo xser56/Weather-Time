@@ -1,0 +1,52 @@
+{
+    "food": {
+        "cold": 
+        [
+            {
+                "food1": "This is food rec 1"
+            },
+            {
+                "food2": "this is food rec 2"
+            },
+            {
+                "food3": "this is food rec 3"
+            },
+            {
+                "food4": "this is food rec 4"
+            },
+            {
+                "food5": "this is food rec 5"
+            },
+            {
+                "food6": "this is food rec 6"
+            },
+            {
+                "food7": "this is food rec 7"
+            }
+        ],
+        "hot": 
+        [
+            {
+                "food1": "This is food rec 1"
+            },
+            {
+                "food2": "this is food rec 2"
+            },
+            {
+                "food3": "this is food rec 3"
+            },
+            {
+                "food4": "this is food rec 4"
+            },
+            {
+                "food5": "this is food rec 5"
+            },
+            {
+                "food6": "this is food rec 6"
+            },
+            {
+                "food7": "this is food rec 7"
+            }
+        ]
+    }
+}
