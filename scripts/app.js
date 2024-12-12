@@ -10,15 +10,41 @@ let weatherIcon2 = document.getElementById("weatherIcon2");
 let weatherIcon3 = document.getElementById("weatherIcon3");
 let weatherIcon4 = document.getElementById("weatherIcon4");
 
+let rec = document.getElementById("rec");
+
 let day1 = document.getElementById("day1");
 let day2 = document.getElementById("day2");
 let day3 = document.getElementById("day3");
 let day4 = document.getElementById("day4");
 
-let rec = document.getElementById("rec");
-
-// Test Button
 let testButton = document.getElementById("testButton");
+
+// Food Function Start
+async function getFoodData() 
+{
+    const response = await fetch("./data/food.json")
+    const data = await response.json();
+    console.log(data.food.cold[0].food1);
+    return data;
+}
+
+async function randomFood()
+{
+    let data = await getFoodData();
+    
+    // if data* is lower then temperature*, grab food data* from "cold" .json
+        // return data.food.cold[randomIndex]
+    // else data* is higher then temperature*, grab food data* from "hot" .json
+        // return data.food.hot[randomIndex]   
+}
+randomFood();
+
+// API
+testButtonRec.addEventListener("click", async function()
+{
+    let data = await getFoodData();
+    rec.innerText = data.food.cold[0].food1;
+});
 
 async function getAPI()
 {
@@ -33,22 +59,7 @@ async function getWeekAPI()
     const data = await response.json();
     return data;    
 }
-
-async function getFoodData() // Local data
-{
-    const response = await fetch("./data/food.json")
-    const data = await response.json();
-    console.log(data.food.cold[0].food1);
-    return data;
-}
-
-testButtonRec.addEventListener("click", async function()
-{
-    let data = await getFoodData();
-    rec.innerText = data.food.cold[0].food1;
-});
-
-// Test Shit
+// API Test Shit
 testButton.addEventListener("click", async function()
 {
     let data = await getAPI();
