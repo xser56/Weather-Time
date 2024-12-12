@@ -20,4 +20,4 @@ To Do:
 2. Favorite Button
 3. Icons
 4. Finish Styling
-5. Everything else
+5. Whatever else
