@@ -14,3 +14,10 @@ Favorite button
 
 Refactor Code:
 Clean code. Make arrays
+
+To Do:
+1. Local Save
+2. Favorite Button
+3. Icons
+4. Finish Styling
+5. Everything else

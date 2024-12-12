@@ -44,7 +44,7 @@ async function grabRandomFood(currentTemp)
     return foodArray[randomIndex];
 }
 
-// Update UI
+// Update UI 
 function updateUI(weatherData, weekData) 
 {
     currentTemp.innerText = Math.trunc(weatherData.list[0].main.temp);
@@ -63,14 +63,16 @@ function updateUI(weatherData, weekData)
         const dayData = weekData.daily[i];
         const dayDate = new Date(dayData.dt * 1000);
         days[i - 1].innerText = Math.round(dayData.temp.day);
-        weatherIcons[i - 1].src = `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
+        weatherIcons[i - 1].url = `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
         dayWeek[i - 1].innerText = daysOfWeek[dayDate.getDay()];
     }
 }
 
+// DOM
 searchBtn.addEventListener("click", async function () 
 {
     const cityName = searchBar.value.trim();
+    
     if (!cityName) 
     {
         return;
@@ -116,7 +118,6 @@ async function getFoodData()
 testButtonRec.addEventListener("click", async function () 
 {
     let recommendTab = await grabRandomFood(currentTemp.innerText);
-    if (!recommendTab) return;
 
     let foodKey = Object.keys(recommendTab);
     let foodValue = Object.values(recommendTab);
