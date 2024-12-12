@@ -4,6 +4,9 @@ let currentTemp = document.getElementById("currentTemp");
 let lowTemp = document.getElementById("lowTemp");
 let highTemp = document.getElementById("highTemp");
 let city = document.getElementById("city");
+let searchBtn = document.getElementById("searchBtn");
+let searchBar = document.getElementById("searchBar");
+
 
 let weatherIcon = document.getElementById("weatherIcon");
 let weatherIcon2 = document.getElementById("weatherIcon2");
@@ -25,9 +28,7 @@ let dayWeek3 = document.getElementById("dayWeek3");
 let day4 = document.getElementById("day4");
 let dayWeek4 = document.getElementById("dayWeek4");
 
-
 let testButton = document.getElementById("testButton");
-
 let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 async function getAPI()
@@ -84,18 +85,30 @@ testButtonRec.addEventListener("click", async function()
     console.log(recommendTab);
 });
 
+
+searchBar.add
+
+
 // API Test Shit
 testButton.addEventListener("click", async function()
 {
     let data = await getAPI();
     let weekData = await getWeekAPI();
-
+    let recommendTab = await grabRandomFood();
+    
     // Current Day
     weatherIcon.innerText = data.list[0].weather[0].icon;
     currentTemp.innerText = Math.trunc(data.list[0].main.temp);
     lowTemp.innerText = Math.trunc(data.list[0].main.temp_min);
     highTemp.innerText = Math.trunc(data.list[0].main.temp_max);
-    city.innerText = data.city.name, data.city.country;
+    city.innerText = `${data.city.name}, ${data.city.country}`;
+    
+    // Recommend Tab
+    let foodKey = Object.keys(recommendTab);
+    let foodValue = Object.values(recommendTab);
+    recKey.innerText = foodKey + ":";
+    recValue.innerText = foodValue;
+    console.log(recommendTab);
 
     // 1st Day
     let day1Date = new Date(weekData.daily[1].dt * 1000);
@@ -121,12 +134,4 @@ testButton.addEventListener("click", async function()
     day4.innerText = Math.round(weekData.daily[3].temp.day);
     dayWeek4.innerText = daysOfWeek[day4Date.getDay()];
 
-    let recommendTab = await grabRandomFood();
-    let foodKey = Object.keys(recommendTab);
-    let foodValue = Object.values(recommendTab);
-
-    // Recommend Tab
-    recKey.innerText = foodKey + ":";
-    recValue.innerText = foodValue;
-    console.log(recommendTab);
 });
