@@ -3,49 +3,49 @@
         "cold": 
         [
             {
-                "food1": "This is food rec 1"
+                "Salad": "Salad: A refreshing mix of leafy greens, vegetables, and sometimes fruits or nuts, often topped with a tangy dressing. Popular variations include Caesar, Greek, and garden salads."
             },
             {
-                "food2": "this is food rec 2"
+                "Cold Sandwhich": "A versatile food made with bread, meats (like turkey or ham), cheese, and veggies. Typically served chilled with condiments like mayo or mustard."
             },
             {
-                "food3": "this is food rec 3"
+                "Sushi": "Bite-sized rolls or slices of rice, seafood, and vegetables, often wrapped in seaweed. Served cold and paired with soy sauce, wasabi, or pickled ginger."
             },
             {
-                "food4": "this is food rec 4"
+                "Gazpacho": "A chilled tomato-based soup originating from Spain, made with blended vegetables like cucumbers, peppers, and garlic."
             },
             {
-                "food5": "this is food rec 5"
+                "Fruit Salad": "A sweet and juicy mix of fresh fruits like berries, melons, and grapes, often tossed with a touch of honey or mint."
             },
             {
-                "food6": "this is food rec 6"
+                "Ceviche": "A seafood dish made with raw fish or shrimp cured in citrus juice, mixed with onions, peppers, and herbs for a tangy, cold appetizer."
             },
             {
-                "food7": "this is food rec 7"
+                "Pasta Salad": "A chilled dish of cooked pasta tossed with vegetables, meats, cheese, and a flavorful dressing like Italian or vinaigrette. Often a favorite at picnics and BBQs."
             }
         ],
         "hot": 
         [
             {
-                "food1": "This is food rec 1"
+                "Pizza": "A classic dish with a dough base topped with tomato sauce, cheese, and various toppings like pepperoni, vegetables, or mushrooms, baked to perfection."
             },
             {
-                "food2": "this is food rec 2"
+                "Soup": "A warm, comforting dish made from simmering ingredients like vegetables, meats, or grains in broth. Popular varieties include chicken noodle, tomato, and minestrone."
             },
             {
-                "food3": "this is food rec 3"
+                "Grilled Cheese Sandwich": "A simple, gooey delight made with melted cheese sandwiched between toasted bread slices, often paired with tomato soup."
             },
             {
-                "food4": "this is food rec 4"
+                "Pasta": "A versatile Italian dish served hot, with noodles like spaghetti or penne combined with sauces like marinara, Alfredo, or pesto. Often includes meat or vegetables."
             },
             {
-                "food5": "this is food rec 5"
+                "Steak": "A juicy, grilled or pan-seared cut of beef, seasoned and cooked to your preferred level of doneness, often served with sides like mashed potatoes or vegetables."
             },
             {
-                "food6": "this is food rec 6"
+                "Burgers": "A hot sandwich consisting of a grilled beef patty (or alternative protein), cheese, lettuce, tomatoes, and condiments, all layered between a toasted bun."
             },
             {
-                "food7": "this is food rec 7"
+                "Stir-Fry": "A flavorful dish of meat, vegetables, and noodles or rice, cooked quickly in a hot wok with sauces like soy, teriyaki, or hoisin, often served steaming hot."
             }
         ]
     }

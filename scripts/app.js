@@ -10,7 +10,8 @@ let weatherIcon2 = document.getElementById("weatherIcon2");
 let weatherIcon3 = document.getElementById("weatherIcon3");
 let weatherIcon4 = document.getElementById("weatherIcon4");
 
-let rec = document.getElementById("rec");
+let recKey = document.getElementById("recKey");
+let recValue = document.getElementById("recValue");
 
 let day1 = document.getElementById("day1");
 let day2 = document.getElementById("day2");
@@ -19,32 +20,7 @@ let day4 = document.getElementById("day4");
 
 let testButton = document.getElementById("testButton");
 
-// Food Function Start
-async function getFoodData() 
-{
-    const response = await fetch("./data/food.json")
-    const data = await response.json();
-    console.log(data.food.cold[0].food1);
-    return data;
-}
-
-async function randomFood()
-{
-    let data = await getFoodData();
-    
-    // if data* is lower then temperature*, grab food data* from "cold" .json
-        // return data.food.cold[randomIndex]
-    // else data* is higher then temperature*, grab food data* from "hot" .json
-        // return data.food.hot[randomIndex]   
-}
-randomFood();
-
-// API
-testButtonRec.addEventListener("click", async function()
-{
-    let data = await getFoodData();
-    rec.innerText = data.food.cold[0].food1;
-});
+let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
 
 async function getAPI()
 {
@@ -59,6 +35,47 @@ async function getWeekAPI()
     const data = await response.json();
     return data;    
 }
+
+async function getFoodData() 
+{
+    const response = await fetch("./data/food.json")
+    const data = await response.json();
+    return data;
+}
+
+// Food Function 
+async function grabRandomFood(currentTemp)
+{
+
+    let data = await getFoodData();
+    let tempLimit = 75;
+    let foodArray;
+
+    if (currentTemp >= tempLimit)
+    {
+        foodArray = data.food.cold;
+    }
+    else
+    {
+        foodArray = data.food.hot;
+    }
+    let randomIndex = Math.floor(Math.random() * foodArray.length);
+
+    return foodArray[randomIndex];
+}
+
+// Recommend Text
+testButtonRec.addEventListener("click", async function()
+{
+    let recommendTab = await grabRandomFood();
+    let foodKey = Object.keys(recommendTab);
+    let foodValue = Object.values(recommendTab);
+
+    recKey.innerText = foodKey + ":";
+    recValue.innerText = foodValue;
+    console.log(recommendTab);
+});
+
 // API Test Shit
 testButton.addEventListener("click", async function()
 {
@@ -88,4 +105,12 @@ testButton.addEventListener("click", async function()
     weatherIcon4.innerText = weekData.daily[3].weather[0].icon;
     day4.innerText = Math.round(weekData.daily[3].temp.day);
 
+    let recommendTab = await grabRandomFood();
+    let foodKey = Object.keys(recommendTab);
+    let foodValue = Object.values(recommendTab);
+
+    // Recommend Tab
+    recKey.innerText = foodKey + ":";
+    recValue.innerText = foodValue;
+    console.log(recommendTab);
 });
