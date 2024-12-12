@@ -58,7 +58,6 @@ async function getFoodData()
         if (!response.ok) throw new Error("Failed to fetch food data.");
         const data = await response.json();
         return data;
-   
 }
 
 // Food Function

@@ -7,8 +7,8 @@ let city = document.getElementById("city");
 let searchBtn = document.getElementById("searchBtn");
 let searchBar = document.getElementById("searchBar");
 
-
 let weatherIcon = document.getElementById("weatherIcon");
+let weatherIcon1 = document.getElementById("weatherIcon1");
 let weatherIcon2 = document.getElementById("weatherIcon2");
 let weatherIcon3 = document.getElementById("weatherIcon3");
 let weatherIcon4 = document.getElementById("weatherIcon4");
@@ -29,109 +29,99 @@ let day4 = document.getElementById("day4");
 let dayWeek4 = document.getElementById("dayWeek4");
 
 let testButton = document.getElementById("testButton");
-let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+let testButtonRec = document.getElementById("testButtonRec");
+let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-async function getAPI()
+// Food Function
+async function grabRandomFood(currentTemp) 
 {
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?=&lat=37.961632&lon=-121.275604&units=imperial&appid=${myKey}`);
+    const data = await getFoodData();
+    if (!data) return;
+
+    let tempLimit = 75;
+    let foodArray = currentTemp >= tempLimit ? data.food.cold : data.food.hot;
+    let randomIndex = Math.floor(Math.random() * foodArray.length);
+    return foodArray[randomIndex];
+}
+
+// Update UI
+function updateUI(weatherData, weekData) 
+{
+    currentTemp.innerText = Math.trunc(weatherData.list[0].main.temp);
+    lowTemp.innerText = Math.trunc(weatherData.list[0].main.temp_min);
+    highTemp.innerText = Math.trunc(weatherData.list[0].main.temp_max);
+    city.innerText = `${weatherData.city.name}, ${weatherData.city.country}`;
+    weatherIcon.src = `https://openweathermap.org/img/wn/${weatherData.list[0].weather[0].icon}@2x.png`;
+
+    // Weekly tabs
+    const days = [day1, day2, day3, day4];
+    const weatherIcons = [weatherIcon1, weatherIcon2, weatherIcon3, weatherIcon4];
+    const dayWeek = [dayWeek1, dayWeek2, dayWeek3, dayWeek4];
+
+    for (let i = 1; i < 5; i++) 
+    {
+        const dayData = weekData.daily[i];
+        const dayDate = new Date(dayData.dt * 1000);
+        days[i - 1].innerText = Math.round(dayData.temp.day);
+        weatherIcons[i - 1].src = `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
+        dayWeek[i - 1].innerText = daysOfWeek[dayDate.getDay()];
+    }
+}
+
+searchBtn.addEventListener("click", async function () 
+{
+    const cityName = searchBar.value.trim();
+    if (!cityName) 
+    {
+        return;
+    }
+    // Grab Geo API
+    const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${myKey}`);
+    const geoData = await response.json();
+
+    if (!geoData || geoData.length === 0) 
+    {
+        alert("City not found. Please enter a valid city name."); // Make placeholser text or something 
+        return;
+    }
+    const {lat, lon} = geoData[0];
+    const weatherData = await getAPI(lat, lon);
+    const weekData = await getWeekAPI(lat, lon);
+    updateUI(weatherData, weekData);
+});
+
+// Fetch functions
+async function getAPI(lat, lon) 
+{
+    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${myKey}`);
     const data = await response.json();
     return data;
 }
 
-async function getWeekAPI() 
+async function getWeekAPI(lat, lon) 
 {
-    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?exclude=minutely,alerts,hourly&lat=37.961632&lon=-121.275604&appid=${myKey}&units=imperial`);
+    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?exclude=minutely,alerts,hourly&lat=${lat}&lon=${lon}&appid=${myKey}&units=imperial`);
     const data = await response.json();
-    return data;    
+    return data;
 }
 
 async function getFoodData() 
 {
-    const response = await fetch("./data/food.json")
+    const response = await fetch("./data/food.json");
     const data = await response.json();
     return data;
 }
 
-// Food Function 
-async function grabRandomFood(currentTemp)
+//Test stuff
+testButtonRec.addEventListener("click", async function () 
 {
+    let recommendTab = await grabRandomFood(currentTemp.innerText);
+    if (!recommendTab) return;
 
-    let data = await getFoodData();
-    let tempLimit = 75;
-    let foodArray;
-
-    if (currentTemp >= tempLimit)
-    {
-        foodArray = data.food.cold;
-    }
-    else
-    {
-        foodArray = data.food.hot;
-    }
-    let randomIndex = Math.floor(Math.random() * foodArray.length);
-
-    return foodArray[randomIndex];
-}
-
-// Recommend Text
-testButtonRec.addEventListener("click", async function()
-{
-    let recommendTab = await grabRandomFood();
     let foodKey = Object.keys(recommendTab);
     let foodValue = Object.values(recommendTab);
 
     recKey.innerText = foodKey + ":";
     recValue.innerText = foodValue;
     console.log(recommendTab);
-});
-
-
-searchBar.add
-
-
-// API Test Shit
-testButton.addEventListener("click", async function()
-{
-    let data = await getAPI();
-    let weekData = await getWeekAPI();
-    let recommendTab = await grabRandomFood();
-    
-    // Current Day
-    weatherIcon.innerText = data.list[0].weather[0].icon;
-    currentTemp.innerText = Math.trunc(data.list[0].main.temp);
-    lowTemp.innerText = Math.trunc(data.list[0].main.temp_min);
-    highTemp.innerText = Math.trunc(data.list[0].main.temp_max);
-    city.innerText = `${data.city.name}, ${data.city.country}`;
-    
-    // Recommend Tab
-    let foodKey = Object.keys(recommendTab);
-    let foodValue = Object.values(recommendTab);
-    recKey.innerText = foodKey + ":";
-    recValue.innerText = foodValue;
-    console.log(recommendTab);
-
-    // 1st Day
-    let day1Date = new Date(weekData.daily[1].dt * 1000);
-    weatherIcon1.innerText = weekData.daily[0].weather[0].icon;
-    day1.innerText = Math.round(weekData.daily[0].temp.day);
-    dayWeek1.innerText = daysOfWeek[day1Date.getDay()]; 
-
-    // 2nd Day
-    let day2Date = new Date(weekData.daily[2].dt * 1000);
-    weatherIcon2.innerText = weekData.daily[1].weather[0].icon;
-    day2.innerText = Math.round(weekData.daily[1].temp.day);
-    dayWeek2.innerText = daysOfWeek[day2Date.getDay()];
-
-    // 3rd Day
-    let day3Date = new Date(weekData.daily[3].dt * 1000);
-    weatherIcon3.innerText = weekData.daily[2].weather[0].icon;
-    day3.innerText = Math.round(weekData.daily[2].temp.day);
-    dayWeek3.innerText = daysOfWeek[day3Date.getDay()];
-
-    // 4th Day
-    let day4Date = new Date(weekData.daily[4].dt * 1000);
-    weatherIcon4.innerText = weekData.daily[3].weather[0].icon;
-    day4.innerText = Math.round(weekData.daily[3].temp.day);
-    dayWeek4.innerText = daysOfWeek[day4Date.getDay()];
-
 });
