@@ -1,4 +1,5 @@
 import { myKey } from "./key.js";
+import { getAPI, getWeekAPI, getFoodData } from "./grabData.js";
 
 let currentTemp = document.getElementById("currentTemp");
 let lowTemp = document.getElementById("lowTemp");
@@ -32,7 +33,7 @@ let testButton = document.getElementById("testButton");
 let testButtonRec = document.getElementById("testButtonRec");
 let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
 
-// Food Function
+// Functions
 async function grabRandomFood(currentTemp) 
 {
     const data = await getFoodData();
@@ -72,7 +73,7 @@ function updateUI(weatherData, weekData)
 searchBtn.addEventListener("click", async function () 
 {
     const cityName = searchBar.value.trim();
-    
+
     if (!cityName) 
     {
         return;
@@ -91,28 +92,6 @@ searchBtn.addEventListener("click", async function ()
     const weekData = await getWeekAPI(lat, lon);
     updateUI(weatherData, weekData);
 });
-
-// Fetch functions
-async function getAPI(lat, lon) 
-{
-    const response = await fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=imperial&appid=${myKey}`);
-    const data = await response.json();
-    return data;
-}
-
-async function getWeekAPI(lat, lon) 
-{
-    const response = await fetch(`https://api.openweathermap.org/data/3.0/onecall?exclude=minutely,alerts,hourly&lat=${lat}&lon=${lon}&appid=${myKey}&units=imperial`);
-    const data = await response.json();
-    return data;
-}
-
-async function getFoodData() 
-{
-    const response = await fetch("./data/food.json");
-    const data = await response.json();
-    return data;
-}
 
 //Test stuff
 testButtonRec.addEventListener("click", async function () 
