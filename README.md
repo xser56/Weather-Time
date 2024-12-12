@@ -7,10 +7,10 @@ Make grid for card placement or something
 Finish styling (font, colors, drop shadow, etc)
 
 Js:
-Search
-Local save
-Hook up icons
+Local save (Need To Do)
+Search - Works (refine if I have time)
+Hook up icons (Fix Icons url)
 Favorite button
 
 Refactor Code:
-make array for variables / elements
+Clean code. Make arrays
