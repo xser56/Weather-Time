@@ -35,49 +35,36 @@ let dayWeek4 = document.getElementById("dayWeek4");
 
 let daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
-// Get Food
-async function grabRandomFood(currentTemp) 
+// Inputs
+
+// Favorite Button
+favoriteButton.addEventListener("click", function () 
 {
-    const data = await getFoodData();
-    if (!data) return;
-    
-    let tempLimit = 75;
-    let foodArray = currentTemp >= tempLimit ? data.food.cold : data.food.hot;
-    let randomIndex = Math.floor(Math.random() * foodArray.length);
-    return foodArray[randomIndex];
+    let cityName = city.innerText.replace("📍", "").trim();
+    let favorites = getFromLocalStorage("favorites") || []; 
 
-}
-
-// save favorite list
-// add event listener
-
-function addtoFavorites()
-{
-    let favorites = getFromLocalStorage("favorites");
-
-    if (favorites.includes(cityName)) 
+    if (favorites.includes(cityName))
     {
-        alert(`${cityName} is already included.`);
-        return;
+        favorites = favorites.filter(city => city !== cityName);
+
+        saveToLocalStorage("favorites", favorites);
+    } 
+    else 
+    {
+        
+        if (favorites.length >= 5) 
+        {
+            favorites.shift(); 
+        }
+        favorites.push(cityName);
+
+        saveToLocalStorage("favorites", favorites); 
     }
 
-    if (favorites.length >= 5) 
-    {
-        favorites.shift(); 
-    }
-    favorites.push(cityName);
-
-    saveToLocalStorage("favorites", favorites);
     updateFavoritesUI();
-}
-
-favoriteButton.addEventListener("click", function()
-{
-
 });
 
-
-// Input
+// Search Button Input
 searchBtn.addEventListener("click", async function () 
 {
     let foodData = await grabRandomFood();
@@ -88,6 +75,7 @@ searchBtn.addEventListener("click", async function ()
     {
         return;
     }
+
     // Grab Geo API
     const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${myKey}`);
     const geoData = await response.json();
@@ -108,7 +96,7 @@ searchBtn.addEventListener("click", async function ()
     updateUI(weatherData, weekData, foodData);
 });
 
-// Update UI DOM
+// DOM
 async function updateUI(weatherData, weekData) 
 {
     const weatherIconData = weatherData.list[0].weather[0].icon;
@@ -121,7 +109,6 @@ async function updateUI(weatherData, weekData)
     weatherIcon.src = grabWeatherIcon;
     console.log(grabWeatherIcon);
     
-
     // Weekly tabs
     const days = [day1, day2, day3, day4];
     const weatherIcons = [weatherIcon1, weatherIcon2, weatherIcon3, weatherIcon4];
@@ -150,15 +137,40 @@ async function updateUI(weatherData, weekData)
     console.log(recommendTab);
 }
 
-// Local Storage Save
-document.addEventListener("DOMContentLoaded", function () 
+// Favorite Tab
+function updateFavoritesUI() 
 {
+    let favorites = getFromLocalStorage("favorites") || [];
+
+    favoriteList.innerHTML = ""; 
+
+    favorites.forEach(city => 
+    {
+        let listItem = document.createElement("li");
+        listItem.textContent = city;
+
+
+        // Remove
+        let removeBtn = document.createElement("removeButton");
+        removeBtn.textContent = " - Remove";
+        removeBtn.onclick = () => removeFavorite(city);
+
+        listItem.appendChild(removeBtn);
+        
+        favoriteList.appendChild(listItem);
+    });
+    console.log("Favorites UI updated:", favorites);
+}
+
+// Global Save
+document.addEventListener("DOMContentLoaded", function () {
+    updateFavoritesUI(); // Update favorites list UI on page load
+
     const savedWeatherData = getFromLocalStorage("weatherData");
     const savedWeekData = getFromLocalStorage("weekData");
     const savedFoodData = getFromLocalStorage("foodData");
 
-    if (savedWeatherData && savedWeekData && savedFoodData) 
-    {
+    if (savedWeatherData && savedWeekData && savedFoodData) {
         console.log("Local storage data: ", savedWeatherData, savedWeekData, savedFoodData);
         updateUI(savedWeatherData, savedWeekData, savedFoodData);
     } else {
@@ -166,16 +178,29 @@ document.addEventListener("DOMContentLoaded", function ()
     }
 });
 
+// Functions
 
-// //Test stuff
-// testButtonRec.addEventListener("click", async function () 
-// {
-//     let recommendTab = await grabRandomFood(currentTemp.innerText);
+// Get Food
+async function grabRandomFood(currentTemp) 
+{
+    const data = await getFoodData();
+    if (!data) return;
+    
+    let tempLimit = 75;
+    let foodArray = currentTemp >= tempLimit ? data.food.cold : data.food.hot;
+    let randomIndex = Math.floor(Math.random() * foodArray.length);
+    return foodArray[randomIndex];
+}
 
-//     let foodKey = Object.keys(recommendTab);
-//     let foodValue = Object.values(recommendTab);
+// Remove from favorites
+function removeFavorite(cityName) 
+{
+    let favorites = getFromLocalStorage("favorites") || [];
+    favorites = favorites.filter(city => city !== cityName);
+    console.log("Removed from favorites:", cityName);
+    console.log("Updated favorites:", favorites);
 
-//     recKey.innerText = foodKey + ":";
-//     recValue.innerText = foodValue;
-//     console.log(recommendTab);
-// });
+    saveToLocalStorage("favorites", favorites);
+    updateFavoritesUI();
+}
+
