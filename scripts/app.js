@@ -31,7 +31,7 @@ let dayWeek4 = document.getElementById("dayWeek4");
 
 let testButton = document.getElementById("testButton");
 let testButtonRec = document.getElementById("testButtonRec");
-let daysOfWeek = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+let daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
 // Functions
 async function grabRandomFood(currentTemp) 
@@ -45,42 +45,7 @@ async function grabRandomFood(currentTemp)
     return foodArray[randomIndex];
 }
 
-// Update UI 
-async function updateUI(weatherData, weekData) 
-{
-    currentTemp.innerText = Math.trunc(weatherData.list[0].main.temp);
-    lowTemp.innerText = Math.trunc(weatherData.list[0].main.temp_min);
-    highTemp.innerText = Math.trunc(weatherData.list[0].main.temp_max);
-    city.innerText = `📍 ${weatherData.city.name}, ${weatherData.city.country}`;
-    weatherIcon.src = `https://openweathermap.org/img/wn/${weatherData.list[0].weather[0].icon}@2x.png`;
-
-    // Weekly tabs
-    const days = [day1, day2, day3, day4];
-    const weatherIcons = [weatherIcon1, weatherIcon2, weatherIcon3, weatherIcon4];
-    const dayWeek = [dayWeek1, dayWeek2, dayWeek3, dayWeek4];
-
-    for (let i = 1; i < 5; i++) 
-    {
-        const dayData = weekData.daily[i];
-        const dayDate = new Date(dayData.dt * 1000);
-
-        days[i - 1].innerText = Math.round(dayData.temp.day);
-        weatherIcons[i - 1].url = `https://openweathermap.org/img/wn/${dayData.weather[0].icon}@2x.png`;
-        dayWeek[i - 1].innerText = daysOfWeek[dayDate.getDay()];
-    }
-
-    let recommendTab = await grabRandomFood();
-
-    let foodKey = Object.keys(recommendTab);
-    let foodValue = Object.values(recommendTab);
-
-    recKey.innerText = foodKey + ":";
-    recValue.innerText = foodValue;
-    console.log(recommendTab);
-
-}
-
-// DOM
+// Input
 searchBtn.addEventListener("click", async function () 
 {
     const cityName = searchBar.value.trim();
@@ -104,10 +69,36 @@ searchBtn.addEventListener("click", async function ()
     updateUI(weatherData, weekData);
 });
 
-//Test stuff
-testButtonRec.addEventListener("click", async function () 
+// Update UI DOM
+async function updateUI(weatherData, weekData) 
 {
-    let recommendTab = await grabRandomFood(currentTemp.innerText);
+    const weatherIconData = weatherData.list[0].weather[0].icon;
+    const grabWeatherIcon = `https://openweathermap.org/img/wn/${weatherIconData}@2x.png`;
+
+    currentTemp.innerText = Math.trunc(weatherData.list[0].main.temp);
+    lowTemp.innerText = Math.trunc(weatherData.list[0].main.temp_min);
+    highTemp.innerText = Math.trunc(weatherData.list[0].main.temp_max);
+    city.innerText = `📍 ${weatherData.city.name}, ${weatherData.city.country}`;
+    weatherIcon.src = grabWeatherIcon;
+    console.log(grabWeatherIcon);
+
+    // Weekly tabs
+    const days = [day1, day2, day3, day4];
+    const weatherIcons = [weatherIcon1, weatherIcon2, weatherIcon3, weatherIcon4];
+    const dayWeek = [dayWeek1, dayWeek2, dayWeek3, dayWeek4];
+
+    for (let i = 1; i < 5; i++) 
+    {
+        const dayData = weekData.daily[i];
+        const dayDate = new Date(dayData.dt * 1000);
+        const weekDataIcon = weekData.daily[i].weather[0].icon;
+
+        days[i - 1].innerText = Math.round(dayData.temp.day);
+        weatherIcons[i - 1].src = `https://openweathermap.org/img/wn/${weekDataIcon}@2x.png`;
+        dayWeek[i - 1].innerText = daysOfWeek[dayDate.getDay()];
+    }
+
+    let recommendTab = await grabRandomFood();
 
     let foodKey = Object.keys(recommendTab);
     let foodValue = Object.values(recommendTab);
@@ -115,4 +106,20 @@ testButtonRec.addEventListener("click", async function ()
     recKey.innerText = foodKey + ":";
     recValue.innerText = foodValue;
     console.log(recommendTab);
-});
+
+}
+
+
+
+// //Test stuff
+// testButtonRec.addEventListener("click", async function () 
+// {
+//     let recommendTab = await grabRandomFood(currentTemp.innerText);
+
+//     let foodKey = Object.keys(recommendTab);
+//     let foodValue = Object.values(recommendTab);
+
+//     recKey.innerText = foodKey + ":";
+//     recValue.innerText = foodValue;
+//     console.log(recommendTab);
+// });

@@ -92,18 +92,10 @@ p, li
 {
     grid-column: 2;
     width: 328px;
-    height: 204px;
+    height: 225px;
 }
 
 /* End Grid */
-
-
-
-
-.box-shadow
-{
-    box-shadow: 10px;
-}
 
 /* Start Search Bar */
 .search-container
@@ -140,7 +132,7 @@ input::placeholder
 
 .current-img
 {
-    width: 100%;
+    width: 200px;
     height: 140px;
     display: block;
     margin: 0 auto;
@@ -166,5 +158,14 @@ input::placeholder
     height: 77px;
     display: block;
     margin: 0 auto;
+}
+
+@media (max-width:1500px)
+{
+    .favorites-grid
+    {
+        height: 240px;
+        width: 500px;
+    }
 }
 
