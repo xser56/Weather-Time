@@ -1,32 +1,170 @@
 body
 {
     background-image: url("../assests/1b7c9d6721598a57aef7f38ee959d6982df64433.jpg");
-    background-attachment: fixed;
     background-repeat: no-repeat;
     background-size: cover;
+    font-family: glook;
 } 
-
- .background
-{
-    background-color: white;
-    box-shadow: 10px;
-    border-radius: 9px;
-    
-}
-
-.search-Container
-{
-    background-color: white;
-}
-
+/* Start Tags */
 hr
 {
     color: white;
-    
+}
+
+h1
+{
+    font-size: 64px;
+    color: #F12222;
+}
+
+h2
+{
+    font-size: 40px;
+    font-weight: 900;
 }
 
 
-/* p
+h3
 {
-    color: red;
-} */
+    font-size: px;
+    font-weight: 600;
+}
+
+.seperater
+{
+    background-color: white;
+    height: 1px;
+}
+
+.colorRed
+{
+    color: #F12222;
+}
+
+.favoriteButton
+{
+    margin-bottom: .5rem;
+    width: 32px;
+    height: 32px;
+    color: yellow;
+}
+
+p, li
+{
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.background
+{
+    background-color: rgb(255, 255, 255);
+    box-shadow : 1px 0px 20px 0px #000;
+    border-radius: 9px;
+}
+/* End Tags */
+
+/* Start Grid */
+.main-grid
+{
+    display: grid;
+    grid-template-columns: 416px;
+    grid-template-rows: 1fr 1fr;
+    gap: 20px;
+    padding: 20px;
+}
+
+.current-grid
+{
+    grid-row: span 2;
+    width: 416px;
+    height: 465px;
+}
+
+.recommend-grid
+{
+    width: 100%;
+    height: 235px;
+    border-radius: 9px;
+    /* grid-column-end: 4; */
+}
+
+.favorites-grid
+{
+    grid-column: 2;
+    width: 328px;
+    height: 204px;
+}
+
+/* End Grid */
+
+
+
+
+.box-shadow
+{
+    box-shadow: 10px;
+}
+
+/* Start Search Bar */
+.search-container
+{
+    background-color: white;
+    border-radius: 9px;
+    width: 40%;
+}
+
+.flip
+{
+    transform: scaleX(-1);
+}
+
+input
+{
+    border: 0;
+    padding-left: 9.5rem;
+    padding-top: 0.3rem;
+    font-family: glook;
+    font-size: 20px;
+    font-weight: 600;
+    background-color: white;
+}
+
+input::placeholder 
+{
+    font-weight: 600;
+    color: black;
+    font-size: 20px;
+}
+/* End Search bar */
+
+
+.current-img
+{
+    width: 100%;
+    height: 140px;
+    display: block;
+    margin: 0 auto;
+}
+
+
+/* Weather Tabs */
+.spacing
+{
+    margin-top: 6rem;
+    margin-bottom: 4rem;
+    border: 0px;
+}
+
+.card, .spacing
+{
+   box-shadow: 0px 1px 20px 0px #000;
+}
+
+.weather-img
+{
+    width: 77px;
+    height: 77px;
+    display: block;
+    margin: 0 auto;
+}
+
