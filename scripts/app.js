@@ -1,5 +1,6 @@
 import { myKey } from "./key.js";
 import { getAPI, getWeekAPI, getFoodData } from "./grabData.js";
+import { getFromLocalStorage, saveToLocalStorage } from "./localStorage.js";
 
 let currentTemp = document.getElementById("currentTemp");
 let lowTemp = document.getElementById("lowTemp");
@@ -7,6 +8,9 @@ let highTemp = document.getElementById("highTemp");
 let city = document.getElementById("city");
 let searchBtn = document.getElementById("searchBtn");
 let searchBar = document.getElementById("searchBar");
+
+let favoriteButton = document.getElementById("favoriteButton");
+let favoriteList = document.getElementById("favoriteList"); 
 
 let weatherIcon = document.getElementById("weatherIcon");
 let weatherIcon1 = document.getElementById("weatherIcon1");
@@ -29,25 +33,55 @@ let dayWeek3 = document.getElementById("dayWeek3");
 let day4 = document.getElementById("day4");
 let dayWeek4 = document.getElementById("dayWeek4");
 
-let testButton = document.getElementById("testButton");
-let testButtonRec = document.getElementById("testButtonRec");
 let daysOfWeek = ["Sun", "Mon", "Tues", "Wed", "Thurs", "Fri", "Sat"];
 
-// Functions
+// Get Food
 async function grabRandomFood(currentTemp) 
 {
     const data = await getFoodData();
     if (!data) return;
-
+    
     let tempLimit = 75;
     let foodArray = currentTemp >= tempLimit ? data.food.cold : data.food.hot;
     let randomIndex = Math.floor(Math.random() * foodArray.length);
     return foodArray[randomIndex];
+
 }
+
+// save favorite list
+// add event listener
+
+function addtoFavorites()
+{
+    let favorites = getFromLocalStorage("favorites");
+
+    if (favorites.includes(cityName)) 
+    {
+        alert(`${cityName} is already included.`);
+        return;
+    }
+
+    if (favorites.length >= 5) 
+    {
+        favorites.shift(); 
+    }
+    favorites.push(cityName);
+
+    saveToLocalStorage("favorites", favorites);
+    updateFavoritesUI();
+}
+
+favoriteButton.addEventListener("click", function()
+{
+
+});
+
 
 // Input
 searchBtn.addEventListener("click", async function () 
 {
+    let foodData = await grabRandomFood();
+
     const cityName = searchBar.value.trim();
 
     if (!cityName) 
@@ -66,7 +100,12 @@ searchBtn.addEventListener("click", async function ()
     const {lat, lon} = geoData[0];
     const weatherData = await getAPI(lat, lon);
     const weekData = await getWeekAPI(lat, lon);
-    updateUI(weatherData, weekData);
+
+    // Local Storage
+    saveToLocalStorage("weatherData", weatherData);
+    saveToLocalStorage("weekData", weekData);
+    saveToLocalStorage("foodData", foodData)
+    updateUI(weatherData, weekData, foodData);
 });
 
 // Update UI DOM
@@ -81,6 +120,7 @@ async function updateUI(weatherData, weekData)
     city.innerText = `📍 ${weatherData.city.name}, ${weatherData.city.country}`;
     weatherIcon.src = grabWeatherIcon;
     console.log(grabWeatherIcon);
+    
 
     // Weekly tabs
     const days = [day1, day2, day3, day4];
@@ -90,14 +130,16 @@ async function updateUI(weatherData, weekData)
     for (let i = 1; i < 5; i++) 
     {
         const dayData = weekData.daily[i];
-        const dayDate = new Date(dayData.dt * 1000);
+        const dayName = weekData.daily[i];
+        const dayNameDate = new Date(dayName.dt * 1000);
         const weekDataIcon = weekData.daily[i].weather[0].icon;
 
         days[i - 1].innerText = Math.round(dayData.temp.day);
         weatherIcons[i - 1].src = `https://openweathermap.org/img/wn/${weekDataIcon}@2x.png`;
-        dayWeek[i - 1].innerText = daysOfWeek[dayDate.getDay()];
+        dayWeek[i - 1].innerText = daysOfWeek[dayNameDate.getDay()];
     }
 
+    //Recommend Tab
     let recommendTab = await grabRandomFood();
 
     let foodKey = Object.keys(recommendTab);
@@ -106,9 +148,23 @@ async function updateUI(weatherData, weekData)
     recKey.innerText = foodKey + ":";
     recValue.innerText = foodValue;
     console.log(recommendTab);
-
 }
 
+// Local Storage Save
+document.addEventListener("DOMContentLoaded", function () 
+{
+    const savedWeatherData = getFromLocalStorage("weatherData");
+    const savedWeekData = getFromLocalStorage("weekData");
+    const savedFoodData = getFromLocalStorage("foodData");
+
+    if (savedWeatherData && savedWeekData && savedFoodData) 
+    {
+        console.log("Local storage data: ", savedWeatherData, savedWeekData, savedFoodData);
+        updateUI(savedWeatherData, savedWeekData, savedFoodData);
+    } else {
+        console.log("No local storage data found.");
+    }
+});
 
 
 // //Test stuff

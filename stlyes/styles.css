@@ -49,6 +49,19 @@ h3
     color: yellow;
 }
 
+.buttonFavorite
+{
+    border: 0;
+    background-color: white;
+}
+
+.buttonFavorite:hover
+{
+    border: 0;
+    background-color: yellow;
+    color: yellow;
+}
+
 p, li
 {
     font-size: 20px;
