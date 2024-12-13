@@ -1,10 +1,5 @@
 HTML:
 Icons from the API
-Grid
-
-Styling:
-Make grid for card placement or something
-Finish styling (font, colors, drop shadow, etc)
 
 Js:
 Local save (Need To Do)
