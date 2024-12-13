@@ -65,7 +65,7 @@ favoriteButton.addEventListener("click", function ()
 });
 
 // Search Button Input
-searchBtn.addEventListener("click", async function () 
+async function searchBarInputs() 
 {
     let foodData = await grabRandomFood();
 
@@ -76,24 +76,38 @@ searchBtn.addEventListener("click", async function ()
         return;
     }
 
-    // Grab Geo API
     const response = await fetch(`https://api.openweathermap.org/geo/1.0/direct?q=${cityName}&limit=1&appid=${myKey}`);
     const geoData = await response.json();
 
     if (!geoData || geoData.length === 0) 
     {
-        alert("City not found. Please enter a valid city name."); // Make placeholser text or something 
+        alert("City not found. Please enter a valid city name.");
         return;
     }
-    const {lat, lon} = geoData[0];
+    const { lat, lon } = geoData[0];
     const weatherData = await getAPI(lat, lon);
     const weekData = await getWeekAPI(lat, lon);
 
-    // Local Storage
     saveToLocalStorage("weatherData", weatherData);
     saveToLocalStorage("weekData", weekData);
-    saveToLocalStorage("foodData", foodData)
+    saveToLocalStorage("foodData", foodData);
+
     updateUI(weatherData, weekData, foodData);
+}
+
+// Trigger on Enter key press
+searchBar.addEventListener("keydown", function (event) 
+{
+    if (event.key === "Enter") 
+    {
+        searchBarInputs();
+    }
+});
+
+// Trigger on button click
+searchBtn.addEventListener("click", function () 
+{
+    searchBarInputs();
 });
 
 // DOM
@@ -141,28 +155,32 @@ async function updateUI(weatherData, weekData)
 function updateFavoritesUI() 
 {
     let favorites = getFromLocalStorage("favorites") || [];
-
     favoriteList.innerHTML = ""; 
+    let orderedList = document.createElement("ol");
 
     favorites.forEach(city => 
     {
         let listItem = document.createElement("li");
         listItem.textContent = city;
 
-
         // Remove
-        let removeBtn = document.createElement("removeButton");
-        removeBtn.textContent = " - Remove";
-        removeBtn.onclick = () => removeFavorite(city);
+        let removeBtn = document.createElement("removeBtn");
+        removeBtn.textContent = "[Remove]";
+        removeBtn.style.marginLeft = "15px"; 
+        removeBtn.onclick = () => {
+            favorites = favorites.filter(fav => fav !== city); 
+            saveToLocalStorage("favorites", favorites); 
+            updateFavoritesUI(); 
+        };
 
         listItem.appendChild(removeBtn);
-        
-        favoriteList.appendChild(listItem);
+        orderedList.appendChild(listItem);
     });
-    console.log("Favorites UI updated:", favorites);
+    
+    favoriteList.appendChild(orderedList);
 }
 
-// Global Save
+// Local Storage Save
 document.addEventListener("DOMContentLoaded", function () {
     updateFavoritesUI(); // Update favorites list UI on page load
 
